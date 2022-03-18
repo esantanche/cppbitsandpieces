@@ -1,0 +1,5 @@
+I got the idea that the sender/receiver project should treat the incoming messages in an uninterruptible way before starting the thread that processes the message
+
+This way the message is received very quickly and the next one can be processed immediately
+
+It's good to measure the time it takes to process the message
