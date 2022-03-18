@@ -9,6 +9,8 @@
 #include <gtkmm/scrolledwindow.h>
 #include <string>
 
+#include "configurationparser.h"
+
 
 class MainWindow : public Gtk::Window
 {
@@ -45,7 +47,7 @@ protected:
 
   ModelColumns mColumns;
 
-  std::vector<std::string> mnProjectNames;
+  ConfigurationParser mConfigurationParser;
 
 };
 

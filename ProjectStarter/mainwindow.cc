@@ -1,44 +1,21 @@
 #include "mainwindow.h"
+
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 #include <iostream>
+#include <cstdio>
 
 #include "include/rapidjson/document.h"
 #include "include/rapidjson/writer.h"
 #include "include/rapidjson/stringbuffer.h"
-
 #include "include/rapidjson/filereadstream.h"
-#include <cstdio>
- 
 
-// FIXME what's this? auto builder = Gtk::Builder::create_from_file("test.glade");
 
 MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Cancel"),
       mButtonRun("Run")
 {
  
-  FILE* pJsonFile = fopen("big.json", "rb"); // non-Windows use "r"
-  
-  char ReadBuffer[65536];
-
-  rapidjson::FileReadStream InputStream(pJsonFile, ReadBuffer, sizeof(ReadBuffer));
-  
-  rapidjson::Document JsonDocument;
-  JsonDocument.ParseStream(InputStream);
-
-  const rapidjson::Value& cnProjects = JsonDocument;
-
-  assert(cnProjects.IsArray());
-  // Uses SizeType instead of size_t
-  for (rapidjson::SizeType i = 0; i < cnProjects.Size(); i++) {
-    const rapidjson::Value& current_project = JsonDocument[i];
-    //std::cout << i << "---" << current_project["project_name"].GetString()  << std::endl;
-    mnProjectNames.push_back(current_project["project_name"].GetString());
-  }
-      
-  
-  fclose(pJsonFile);
 
   set_default_size(400, 200);
   set_title("Project starter");
@@ -85,13 +62,26 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
 
   // Now creating the rows in the list
 
-  for (std::string iProjectName : mnProjectNames) {
+  const std::vector<std::string> nProjectNames = mConfigurationParser.get_project_names();
+
+
+  for (std::string iProjectName : nProjectNames) {
     
     auto Row = *(mpTreeModel->append());
     Row[mColumns.mColProjectName] = iProjectName;
   
   }
   
+  
+
+  // const std::vector<std::string> nDunno = mConfigurationParser.get_tasks_for_a_project("Energy Consumption");
+
+  // for (std::string iIterDunno : nDunno) {
+    
+  //   std::cout << "iIterDunno " << iIterDunno << std::endl;
+  
+  // }
+
   // Actually putting the column in the view
   mTreeView.append_column("Project Name", mColumns.mColProjectName);
     
@@ -120,7 +110,21 @@ void MainWindow::on_button_run_clicked()
 
   Gtk::TreeModel::Row Row = *iter;
 
-  std::cout << Row[mColumns.mColProjectName] << std::endl; 
+  std::cout << "selected " << Row[mColumns.mColProjectName] << std::endl; 
+
+  //std::string boh_fixme = Row[mColumns.mColProjectName];
+
+  bool Success = mConfigurationParser.run_tasks_for_a_project(Row[mColumns.mColProjectName]);
+
+  if (Success) {
+
+    std::cout << "Success from conf parser" << std::endl;
+
+  } else {
+
+    std::cout << "Failure from conf parser" << std::endl;
+
+  }
   
   close(); // Closing the window
 }

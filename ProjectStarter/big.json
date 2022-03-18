@@ -2,7 +2,12 @@
     {
         "project_name":"Energy Consumption",
         "tasks":[
-            { "task_name":"task 1 energy cons" }
+            { "task_name":"task 1 energy cons",
+              "task_type":"BROWSER",
+              "task_uri":"https://www.google.com/ https://leadershipcoachfortech.com/" },
+            { "task_name":"task 2 energy cons",
+              "task_type":"BROWSER",
+              "task_uri":"https://www.ibm.com/fr-fr" }
         ]
     },
     {
