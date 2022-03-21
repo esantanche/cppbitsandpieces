@@ -16,7 +16,6 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
       mButtonRun("Run")
 {
  
-
   set_default_size(400, 200);
   set_title("Project starter");
   

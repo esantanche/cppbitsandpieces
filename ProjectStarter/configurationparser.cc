@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
+#include <regex>
 #include <unistd.h>
 
 #include "include/rapidjson/document.h"
@@ -33,17 +34,20 @@ ConfigurationParser::ConfigurationParser()
   // Uses SizeType instead of size_t
   for (rapidjson::SizeType i = 0; i < mJsonConfiguration.Size(); i++) {
     const rapidjson::Value& iProject = mJsonConfiguration[i];
-    //std::cout << i << "---" << iProject["project_name"].GetString()  << std::endl;
     mnProjectNames.push_back(iProject["project_name"].GetString());
 
-    // iProject["tasks"]
+    // FIXME  iProject["tasks"]  
     const rapidjson::Value& iProjectTasks = iProject["tasks"];
     assert(iProjectTasks.IsArray());
     for (rapidjson::SizeType j = 0; j < iProjectTasks.Size(); j++) {
       const rapidjson::Value& iTask = iProjectTasks[j];
-      //std::cout << i << "---" << j << "---" << iTask["task_name"].GetString()  << std::endl;
     }
   }
+
+  // FIXME  this goes in its own method
+  
+  initialize_lookup_table_for_executables();
+
     
   fclose(pJsonFile);
     
@@ -58,6 +62,53 @@ std::vector<std::string> ConfigurationParser::get_project_names()
 
   return mnProjectNames;
 }
+
+void ConfigurationParser::initialize_lookup_table_for_executables()
+{
+
+  mnTaskType2Executable["BROWSER"] = "firefox";
+  mnTaskType2Executable["VIDEOPLAYER"] = "vlc";
+  mnTaskType2Executable["FILEMANAGER"] = "nautilus";
+
+  // FIXME  need to add PDFs
+  // FIXME  what about         workspace-rename.sh LNK
+
+
+  return;
+}
+
+std::string ConfigurationParser::get_extra_option_for_given_executable(std::string Executable, std::string ExecutableParameters) 
+{
+  // FIXME  to be completed
+  // Needs to return for example --new-window for firefox in some cases
+  std::string ExtraOptions = "";
+
+  if (std::regex_match(Executable, std::regex(".*firefox.*") )) {
+    //std::cout << "matched" << std::endl;
+    // FIXME  if the ExecutableParameters is two or more uris, no need for --new-window
+
+    // FIXME  does it work with 3 or more urls?
+    if (!std::regex_match(ExecutableParameters, std::regex(".*\\s+.*"))) {
+      //std::cout << "found space " << ExecutableParameters << '\n';
+      ExtraOptions = "--new-window";
+    }
+
+  }
+
+  return ExtraOptions;
+}
+
+bool ConfigurationParser::needs_to_go_to_the_background(std::string Executable)
+{
+  bool NeedsToGoToTheBackground = false;
+
+  if (std::regex_match(Executable, std::regex(".*vlc.*") )) 
+    NeedsToGoToTheBackground = true;
+
+
+  return NeedsToGoToTheBackground;
+}
+
 
   //std::vector<std::string> get_tasks_for_a_project(std::string ProjectName);
 
@@ -85,20 +136,28 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
       for (rapidjson::SizeType j = 0; j < iProjectTasks.Size(); j++)
       {
         const rapidjson::Value &iTask = iProjectTasks[j];
-        // std::cout << i << "---" << j << "---" << iTask["task_name"].GetString()  << std::endl;
-        // std::cout << i << "---" << j << "---" << iTask["task_type"].GetString()  << std::endl;  
-        // std::cout << i << "---" << j << "---" << iTask["task_uri"].GetString()  << std::endl;  
-
+      
         // I have to find a way to specify --new-window to use with firefox 
         // maybe I add an attribute "task_options"
 
-        const std::string cTaskURI = (std::string) iTask["task_uri"].GetString();
-        const std::string cExecutable = "firefox ";
-        const std::string cCommand = cExecutable + cTaskURI;
+        const std::string cTaskType = (std::string) iTask["task_type"].GetString();
+        std::string TaskURI = (std::string) iTask["task_uri"].GetString();
 
-        std::cout << cCommand << std::endl;
+        if (!TaskURI.empty())
+          TaskURI = "\"" + TaskURI + "\"";
 
-        const char *cpCommand = cCommand.c_str();
+        const std::string cExecutable = mnTaskType2Executable[cTaskType];
+
+        const std::string cExtraOptions = get_extra_option_for_given_executable(cExecutable, TaskURI);
+
+        std::string Command = cExecutable + " " + cExtraOptions + " " + TaskURI;
+
+        if (needs_to_go_to_the_background(cExecutable)) 
+            Command = "nohup " + Command + " &";
+        
+        std::cout << Command << std::endl;
+
+        const char *cpCommand = Command.c_str();
 
         system(cpCommand);
 
@@ -107,14 +166,7 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
       }
 
     }
-    // // iProject["tasks"]
-    // const rapidjson::Value &iProjectTasks = iProject["tasks"];
-    // assert(iProjectTasks.IsArray());
-    // for (rapidjson::SizeType j = 0; j < iProjectTasks.Size(); j++)
-    // {
-    //   const rapidjson::Value &iTask = iProjectTasks[j];
-    //   // std::cout << i << "---" << j << "---" << iTask["task_name"].GetString()  << std::endl;
-    // }
+
   }
 
   // true on success, false on failure

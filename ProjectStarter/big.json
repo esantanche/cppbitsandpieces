@@ -2,18 +2,23 @@
     {
         "project_name":"Energy Consumption",
         "tasks":[
-            { "task_name":"task 1 energy cons",
+            { "task_name":"Opening enery consumption sheet",
               "task_type":"BROWSER",
-              "task_uri":"https://www.google.com/ https://leadershipcoachfortech.com/" },
-            { "task_name":"task 2 energy cons",
-              "task_type":"BROWSER",
-              "task_uri":"https://www.ibm.com/fr-fr" }
+              "task_uri":"https://docs.google.com/spreadsheets/d/1yjQlZSromp7bVpyOvEwntwn-pRV2x54Shpub-sbw_8g/edit#gid=0" },
+            { "task_name":"Opening support folder",
+              "task_type":"FILEMANAGER",
+              "task_uri":"/home/esantanche/MasterWorkspace/GTD_Activity_Support/Measuring energy consumption" }
         ]
     },
     {
         "project_name":"Rides",
         "tasks":[
-            { "task_name":"task 1 rides" }
+            { "task_name":"Opening Downloads folder",
+              "task_type":"FILEMANAGER",
+              "task_uri":"/home/esantanche/Downloads" },
+            { "task_name":"Starting video player",
+              "task_type":"VIDEOPLAYER",
+              "task_uri":"" }
         ]
     }
 ]
