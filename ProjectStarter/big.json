@@ -18,7 +18,24 @@
               "task_uri":"/home/esantanche/Downloads" },
             { "task_name":"Starting video player",
               "task_type":"VIDEOPLAYER",
-              "task_uri":"" }
+              "task_uri":"" },
+            { "task_name":"Opening pdf",
+              "task_type":"PDFVIEWER",
+              "task_uri":"/home/esantanche/MasterWorkspace/GTD_Reference/Well-being/Practices/InCaseOfPanic.pdf" }
         ]
-    }
+    },
+    {
+      "project_name":"Test",
+      "tasks":[
+          { "task_name":"3 urls test",
+            "task_type":"BROWSER",
+            "task_uri":"https://www.ibm.com/fr-fr https://www.samsung.com/fr/ https://www.hyundai.com/fr.html" },
+          { "task_name":"Opening Downloads folder",
+            "task_type":"FILEMANAGER",
+            "task_uri":"/home/esantanche/Downloads" },
+          { "task_name":"Opening text file",
+            "task_type":"TEXTEDITOR",
+            "task_uri":"/home/esantanche/Downloads" }
+      ]
+  }
 ]

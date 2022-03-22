@@ -1,148 +1,19 @@
-[000055e4b56dfb70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
+[0000565394c5cb70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
 
-(vlc:336423): Gtk-WARNING **: 18:25:18.284: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
-[000055e4b5782000] main playlist: playlist is empty
+(vlc:195444): Gtk-WARNING **: 15:23:46.721: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
+[0000565394cff000] main playlist: playlist is empty
 QObject::~QObject: Timers cannot be stopped from another thread
-[000055f18acf2b70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
+[000055f70615fb70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
 
-(vlc:344291): Gtk-WARNING **: 18:31:18.904: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
-[00007fa344001150] dvdnav demux error: Couldn't find device name.
-[00007fa344001150] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa344001150] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa344001150] dvdnav demux error: Couldn't find device name.
-[00007fa344001150] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa344001150] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa3480011c0] dvdnav demux error: Couldn't find device name.
-[00007fa3480011c0] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa3480011c0] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa33c000fa0] dvdnav demux error: Couldn't find device name.
-[00007fa33c000fa0] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa33c000fa0] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa348015be0] dvdnav demux error: Couldn't find device name.
-[00007fa348015be0] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa348015be0] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa348015be0] dvdnav demux error: Couldn't find device name.
-[00007fa348015be0] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa348015be0] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa340000990] dvdnav demux error: Couldn't find device name.
-[00007fa340000990] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa340000990] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa340c15210] dvdnav demux error: Couldn't find device name.
-[00007fa340c15210] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa340c15210] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa340004f00] dvdnav demux error: Couldn't find device name.
-[00007fa340004f00] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa340004f00] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa3480069e0] dvdnav demux error: Couldn't find device name.
-[00007fa3480069e0] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa3480069e0] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa348c8f790] dvdnav demux error: Couldn't find device name.
-[00007fa348c8f790] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa348c8f790] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa348c8f790] dvdnav demux error: Couldn't find device name.
-[00007fa348c8f790] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa348c8f790] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa348cb3af0] main decoder error: buffer deadlock prevented
-[00007fa348c28170] dvdnav demux error: Couldn't find device name.
-[00007fa348c28170] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa348c28170] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa33c008970] mjpeg demux error: data shortage
-[00007fa33c008970] dvdnav demux error: Couldn't find device name.
-[00007fa33c008970] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa33c008970] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa33c008970] dvdnav demux error: Couldn't find device name.
-[00007fa33c008970] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa33c008970] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa344016cf0] dvdnav demux error: Couldn't find device name.
-[00007fa344016cf0] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa344016cf0] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa344016cf0] dvdnav demux error: Couldn't find device name.
-[00007fa344016cf0] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa344016cf0] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa34400a410] dvdnav demux error: Couldn't find device name.
-[00007fa34400a410] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa34400a410] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa33cc1db20] dvdnav demux error: Couldn't find device name.
-[00007fa33cc1db20] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa33cc1db20] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa348016640] dvdnav demux error: Couldn't find device name.
-[00007fa348016640] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa348016640] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa33c008970] dvdnav demux error: Couldn't find device name.
-[00007fa33c008970] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa33c008970] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa33c008970] dvdnav demux error: Couldn't find device name.
-[00007fa33c008970] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa33c008970] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa344002340] dvdnav demux error: Couldn't find device name.
-[00007fa344002340] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa344002340] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa340c1fed0] dvdnav demux error: Couldn't find device name.
-[00007fa340c1fed0] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa340c1fed0] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa38c003110] dvdnav demux error: Couldn't find device name.
-[00007fa38c003110] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa38c003110] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa344c1fe40] dvdnav demux error: Couldn't find device name.
-[00007fa344c1fe40] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa344c1fe40] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa38c003110] dvdnav demux error: Couldn't find device name.
-[00007fa38c003110] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa38c003110] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa34400c150] dvdnav demux error: Couldn't find device name.
-[00007fa34400c150] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa34400c150] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa34400c150] dvdnav demux error: Couldn't find device name.
-[00007fa34400c150] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa34400c150] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa344c25dd0] dvdnav demux error: Couldn't find device name.
-[00007fa344c25dd0] dvdnav demux error: DVDOpenFilePath:findDVDFile /VIDEO_TS/VIDEO_TS.IFO failed
-[00007fa344c25dd0] dvdnav demux error: vm: vm: failed to read VIDEO_TS.IFO
-[00007fa364001890] xcb_xv vout display error: no available XVideo adaptor
-[00007fa32801bd30] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364001620] xcb_xv vout display error: no available XVideo adaptor
-[00007fa32803e8e0] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364001620] xcb_xv vout display error: no available XVideo adaptor
-[00007fa328001170] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364001620] xcb_xv vout display error: no available XVideo adaptor
-[00007fa3280212c0] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364003810] xcb_xv vout display error: no available XVideo adaptor
-[00007fa328001170] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364001690] xcb_xv vout display error: no available XVideo adaptor
-[00007fa3280212c0] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364001690] xcb_xv vout display error: no available XVideo adaptor
-[00007fa328001170] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364001690] xcb_xv vout display error: no available XVideo adaptor
-[00007fa3280212c0] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364001690] xcb_xv vout display error: no available XVideo adaptor
-[00007fa328001170] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364001690] xcb_xv vout display error: no available XVideo adaptor
-[00007fa3280212c0] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa364001690] xcb_xv vout display error: no available XVideo adaptor
-[00007fa328001170] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
-[00007fa344051990] main decoder error: buffer deadlock prevented
-[00007fa364001690] xcb_xv vout display error: no available XVideo adaptor
-[00007fa3280212c0] main video output error: video output creation failed
-[00007fa344051990] main decoder error: failed to create video output
+(vlc:196768): Gtk-WARNING **: 15:25:17.519: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
+[000055f706202000] main playlist: playlist is empty
 QObject::~QObject: Timers cannot be stopped from another thread
-[000055e5c6adfb70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
+[000055b5d8f6eb70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
 
-(vlc:347675): Gtk-WARNING **: 18:34:18.854: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
-[000055e5c6b82000] main playlist: playlist is empty
-QObject::~QObject: Timers cannot be stopped from another thread
-[0000558a8cdbcb70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
+(vlc:198049): Gtk-WARNING **: 15:26:57.539: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
+[000055b5d9011000] main playlist: playlist is empty
 
-(vlc:350001): Gtk-WARNING **: 18:38:48.374: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
-[0000558a8ce5f000] main playlist: playlist is empty
+(evince:198151): Gtk-WARNING **: 15:27:00.427: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
 QObject::~QObject: Timers cannot be stopped from another thread
+
+(org.gnome.Nautilus:223707): Gtk-WARNING **: 16:19:37.729: Theme parsing error: main-dark.css:2470:0: Expected a valid selector

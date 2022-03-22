@@ -18,6 +18,7 @@
 ConfigurationParser::ConfigurationParser() 
 {
  
+  // FIXME  put this is its own method
   FILE* pJsonFile = fopen("big.json", "rb"); // non-Windows use "r"
   
   char ReadBuffer[65536];
@@ -44,12 +45,9 @@ ConfigurationParser::ConfigurationParser()
     }
   }
 
-  // FIXME  this goes in its own method
+  fclose(pJsonFile);
   
   initialize_lookup_table_for_executables();
-
-    
-  fclose(pJsonFile);
     
 }
 
@@ -69,10 +67,12 @@ void ConfigurationParser::initialize_lookup_table_for_executables()
   mnTaskType2Executable["BROWSER"] = "firefox";
   mnTaskType2Executable["VIDEOPLAYER"] = "vlc";
   mnTaskType2Executable["FILEMANAGER"] = "nautilus";
+  mnTaskType2Executable["PDFVIEWER"] = "evince";
+  mnTaskType2Executable["TEXTEDITOR"] = "geany";
 
-  // FIXME  need to add PDFs
+
   // FIXME  what about         workspace-rename.sh LNK
-
+  // FIXME  need to be able to open txt files and shell scripts
 
   return;
 }
@@ -84,14 +84,11 @@ std::string ConfigurationParser::get_extra_option_for_given_executable(std::stri
   std::string ExtraOptions = "";
 
   if (std::regex_match(Executable, std::regex(".*firefox.*") )) {
-    //std::cout << "matched" << std::endl;
-    // FIXME  if the ExecutableParameters is two or more uris, no need for --new-window
 
-    // FIXME  does it work with 3 or more urls?
-    if (!std::regex_match(ExecutableParameters, std::regex(".*\\s+.*"))) {
-      //std::cout << "found space " << ExecutableParameters << '\n';
+    // It adds the option -new-window if there is one only URL
+    // It works with 2, 3 or more URLs
+    if (!std::regex_match(ExecutableParameters, std::regex(".*\\s+.*"))) 
       ExtraOptions = "--new-window";
-    }
 
   }
 
@@ -102,15 +99,16 @@ bool ConfigurationParser::needs_to_go_to_the_background(std::string Executable)
 {
   bool NeedsToGoToTheBackground = false;
 
-  if (std::regex_match(Executable, std::regex(".*vlc.*") )) 
-    NeedsToGoToTheBackground = true;
+  // FIXME  nautilus needs to go to the background if there is no other instance running of it
 
+  // FIXME  you have to test all executables when there is already an instance of them running and when there isn't
+  // there may be more executables that need to be sent to the background
+
+  if (std::regex_match(Executable, std::regex(".*(vlc|evince|nautilus).*") )) 
+    NeedsToGoToTheBackground = true;
 
   return NeedsToGoToTheBackground;
 }
-
-
-  //std::vector<std::string> get_tasks_for_a_project(std::string ProjectName);
 
 bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
 {
@@ -126,7 +124,7 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
 
     if (iProject["project_name"].GetString() == ProjectName ) {
 
-      std::cout << "got it" << ProjectName << std::endl;
+      //std::cout << "got it" << ProjectName << std::endl;
 
       ProjectFound = true;
 
@@ -143,8 +141,12 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
         const std::string cTaskType = (std::string) iTask["task_type"].GetString();
         std::string TaskURI = (std::string) iTask["task_uri"].GetString();
 
-        if (!TaskURI.empty())
+        // FIXME  attention! folder paths may still have spaces!!
+        // maybe i can just not support opening many folders in one single task
+
+        if (cTaskType != "BROWSER" && !TaskURI.empty()) {
           TaskURI = "\"" + TaskURI + "\"";
+        }
 
         const std::string cExecutable = mnTaskType2Executable[cTaskType];
 
@@ -152,6 +154,7 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
 
         std::string Command = cExecutable + " " + cExtraOptions + " " + TaskURI;
 
+        // FIXME maybe add this so that you don't get the nohup.out: >/dev/null 2>&1 
         if (needs_to_go_to_the_background(cExecutable)) 
             Command = "nohup " + Command + " &";
         
@@ -161,7 +164,7 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
 
         system(cpCommand);
 
-        sleep(5);
+        sleep(3);
 
       }
 
