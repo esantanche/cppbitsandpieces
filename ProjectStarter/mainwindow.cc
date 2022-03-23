@@ -75,9 +75,20 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   
   // FIXME  Implement double click on list
   // https://docs.gtk.org/gtk4/signal.TreeView.row-activated.html
+  // https://docs.gtk.org/gtk4/signal.TreeView.row-activated.html
 
   // Actually putting the column in the view
   mTreeView.append_column("Project Name", mColumns.mColProjectName);
+
+
+  // // When the run button is clicked, the function on_button_run_clicked is called
+  // mButtonRun.signal_clicked().connect( sigc::mem_fun(*this,
+  //             &MainWindow::on_button_run_clicked) );
+  
+
+  // Connecting double click on list to callback on_treeview_row_activated
+  mTreeView.signal_row_activated().connect( sigc::mem_fun(*this,
+              &MainWindow::on_treeview_row_activated) );
     
 }
 
@@ -90,6 +101,17 @@ void MainWindow::on_button_cancel_clicked()
   
   close(); // Closing the window
 }
+
+// void ExampleWindow::on_treeview_row_activated(const Gtk::TreeModel::Path& path,
+//         Gtk::TreeViewColumn* /* column */)
+
+void MainWindow::on_treeview_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)
+{
+  std::cout << "double click detected" << std::endl;
+  // close(); // Closing the window
+}
+
+
 
 /**
  * @brief 

@@ -50,6 +50,9 @@ protected:
 
   void on_button_run_clicked();
   void on_button_cancel_clicked();
+  // void on_treeview_row_activated();
+  void on_treeview_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
+
 
 };
 
