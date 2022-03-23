@@ -1,19 +1,4 @@
-[0000565394c5cb70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
 
-(vlc:195444): Gtk-WARNING **: 15:23:46.721: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
-[0000565394cff000] main playlist: playlist is empty
-QObject::~QObject: Timers cannot be stopped from another thread
-[000055f70615fb70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
+(geany:361436): Gtk-WARNING **: 11:07:09.269: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
 
-(vlc:196768): Gtk-WARNING **: 15:25:17.519: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
-[000055f706202000] main playlist: playlist is empty
-QObject::~QObject: Timers cannot be stopped from another thread
-[000055b5d8f6eb70] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
-
-(vlc:198049): Gtk-WARNING **: 15:26:57.539: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
-[000055b5d9011000] main playlist: playlist is empty
-
-(evince:198151): Gtk-WARNING **: 15:27:00.427: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
-QObject::~QObject: Timers cannot be stopped from another thread
-
-(org.gnome.Nautilus:223707): Gtk-WARNING **: 16:19:37.729: Theme parsing error: main-dark.css:2470:0: Expected a valid selector
+(WebKitWebProcess:361500): Gtk-WARNING **: 11:07:10.043: Theme parsing error: main-dark.css:2470:0: Expected a valid selector

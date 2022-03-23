@@ -6,6 +6,8 @@
 #include <iostream>
 #include <cstdio>
 
+#include <gtkmm/messagedialog.h>
+
 #include "include/rapidjson/document.h"
 #include "include/rapidjson/writer.h"
 #include "include/rapidjson/stringbuffer.h"
@@ -18,6 +20,13 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
  
   set_default_size(400, 200);
   set_title("Project starter");
+
+  // Gtk::MessageDialog *dlg1 = new Gtk::MessageDialog("No solution exists.");
+			
+  //     dlg1->set_modal(true);
+  // dlg1->show();
+  // sleep(20);
+	// delete dlg1;
   
   // Setting the margin of the vertical box that will contain all elements
   mVBox.set_margin(5);
@@ -71,6 +80,7 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   
   }
   
+  // FIXME  Implement double click on list
   
 
   // const std::vector<std::string> nDunno = mConfigurationParser.get_tasks_for_a_project("Energy Consumption");
@@ -115,15 +125,39 @@ void MainWindow::on_button_run_clicked()
 
   bool Success = mConfigurationParser.run_tasks_for_a_project(Row[mColumns.mColProjectName]);
 
-  if (Success) {
+  Success = false;
 
-    std::cout << "Success from conf parser" << std::endl;
+  if (!Success) {
 
-  } else {
-
+    show_error_message();
+    sleep(20);
     std::cout << "Failure from conf parser" << std::endl;
 
   }
   
   close(); // Closing the window
+}
+
+void MainWindow::show_error_message() 
+{
+
+  std::cout << "inside show_error_message " << std::endl;
+
+  Gtk::MessageDialog *dlg = new Gtk::MessageDialog("No solution exists.");
+			
+  dlg->set_modal(true);
+  dlg->show();
+  sleep(20);
+	delete dlg;
+
+  // mpDialog.reset(new Gtk::MessageDialog(*this, "This is an INFO MessageDialog"));
+  // mpDialog->set_secondary_text(
+  //         "And this is the secondary text that explains things.");
+  // mpDialog->set_modal(true);
+  // mpDialog->set_hide_on_close(true);
+  // mpDialog->signal_response().connect(
+  //   sigc::hide(sigc::mem_fun(*mpDialog, &Gtk::Widget::hide)));
+
+  // mpDialog->show();
+
 }

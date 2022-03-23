@@ -35,7 +35,13 @@
             "task_uri":"/home/esantanche/Downloads" },
           { "task_name":"Opening text file",
             "task_type":"TEXTEDITOR",
-            "task_uri":"/home/esantanche/Downloads" }
+            "task_uri":"/vol/WORKnARCH/SwProjects/leadershipcoachfortech-svelte-edition/CommandsForCoachWebsiteSvelteEdition.md" },
+          { "task_name":"Starting a script",
+            "task_type":"SHELL",
+            "task_uri":"/home/esantanche/MasterWorkspace/Scripts/workspace-rename.sh TESxT" },
+          { "task_name":"Starting a script2",
+            "task_type":"SHELL",
+            "task_uri":"show_cpu_temperature.sh" }
       ]
   }
 ]

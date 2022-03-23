@@ -1,3 +1,10 @@
+/**
+ * @file configurationparser.cc
+ * @author your name (you@domain.com)
+ * @brief 
+ *
+ */
+
 #include "configurationparser.h"
 
 #include <gtkmm/box.h>
@@ -13,7 +20,6 @@
 #include "include/rapidjson/writer.h"
 #include "include/rapidjson/stringbuffer.h"
 #include "include/rapidjson/filereadstream.h"
-
 
 ConfigurationParser::ConfigurationParser() 
 {
@@ -61,6 +67,10 @@ std::vector<std::string> ConfigurationParser::get_project_names()
   return mnProjectNames;
 }
 
+/**
+ * @brief 
+ * 
+ */
 void ConfigurationParser::initialize_lookup_table_for_executables()
 {
 
@@ -69,14 +79,21 @@ void ConfigurationParser::initialize_lookup_table_for_executables()
   mnTaskType2Executable["FILEMANAGER"] = "nautilus";
   mnTaskType2Executable["PDFVIEWER"] = "evince";
   mnTaskType2Executable["TEXTEDITOR"] = "geany";
+  mnTaskType2Executable["SHELL"] = "bash -c";
 
 
   // FIXME  what about         workspace-rename.sh LNK
-  // FIXME  need to be able to open txt files and shell scripts
 
   return;
 }
 
+/**
+ * @brief 
+ * 
+ * @param Executable 
+ * @param ExecutableParameters 
+ * @return std::string 
+ */
 std::string ConfigurationParser::get_extra_option_for_given_executable(std::string Executable, std::string ExecutableParameters) 
 {
   // FIXME  to be completed
@@ -95,16 +112,13 @@ std::string ConfigurationParser::get_extra_option_for_given_executable(std::stri
   return ExtraOptions;
 }
 
+// FIXME  add comments Doxygen style
+
 bool ConfigurationParser::needs_to_go_to_the_background(std::string Executable)
 {
   bool NeedsToGoToTheBackground = false;
 
-  // FIXME  nautilus needs to go to the background if there is no other instance running of it
-
-  // FIXME  you have to test all executables when there is already an instance of them running and when there isn't
-  // there may be more executables that need to be sent to the background
-
-  if (std::regex_match(Executable, std::regex(".*(vlc|evince|nautilus).*") )) 
+  if (std::regex_match(Executable, std::regex(".*(vlc|evince|nautilus|geany).*") )) 
     NeedsToGoToTheBackground = true;
 
   return NeedsToGoToTheBackground;
@@ -112,7 +126,6 @@ bool ConfigurationParser::needs_to_go_to_the_background(std::string Executable)
 
 bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
 {
-  // FIXME exception handling if the give project name is not found
 
   bool ProjectFound = false;
 
@@ -138,15 +151,18 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
         // I have to find a way to specify --new-window to use with firefox 
         // maybe I add an attribute "task_options"
 
+        // FIXME  Do I actually need task_name?
+
         const std::string cTaskType = (std::string) iTask["task_type"].GetString();
         std::string TaskURI = (std::string) iTask["task_uri"].GetString();
 
-        // FIXME  attention! folder paths may still have spaces!!
-        // maybe i can just not support opening many folders in one single task
+        // If the task type is "BROWSER", TaskURI contains one or many URLs (or URIs).
+        // They don't have spaces.
+        // But if the task is different, TaskURI may contain a single path with spaces.
+        // In this case, I add quotations otherwise the path would be interprested as many.
 
-        if (cTaskType != "BROWSER" && !TaskURI.empty()) {
+        if (cTaskType != "BROWSER" && !TaskURI.empty()) 
           TaskURI = "\"" + TaskURI + "\"";
-        }
 
         const std::string cExecutable = mnTaskType2Executable[cTaskType];
 

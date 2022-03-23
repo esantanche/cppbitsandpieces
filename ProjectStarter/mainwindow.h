@@ -7,6 +7,8 @@
 #include <gtkmm/liststore.h>
 #include <gtkmm/box.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/messagedialog.h>
+
 #include <string>
 
 #include "configurationparser.h"
@@ -17,8 +19,6 @@ class MainWindow : public Gtk::Window
 public:
   MainWindow();
   virtual ~MainWindow();
-  void on_button_run_clicked();
-  void on_button_cancel_clicked();
 
 protected:
   // Boxes to contain elements:
@@ -48,6 +48,12 @@ protected:
   ModelColumns mColumns;
 
   ConfigurationParser mConfigurationParser;
+
+  std::unique_ptr<Gtk::MessageDialog> mpDialog;
+
+  void show_error_message();
+  void on_button_run_clicked();
+  void on_button_cancel_clicked();
 
 };
 
