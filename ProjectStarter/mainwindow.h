@@ -13,7 +13,6 @@
 
 #include "configurationparser.h"
 
-
 class MainWindow : public Gtk::Window
 {
 public:
@@ -49,9 +48,6 @@ protected:
 
   ConfigurationParser mConfigurationParser;
 
-  std::unique_ptr<Gtk::MessageDialog> mpDialog;
-
-  void show_error_message();
   void on_button_run_clicked();
   void on_button_cancel_clicked();
 

@@ -2,45 +2,35 @@
     {
         "project_name":"Energy Consumption",
         "tasks":[
-            { "task_name":"Opening enery consumption sheet",
-              "task_type":"BROWSER",
+            { "task_type":"BROWSER",
               "task_uri":"https://docs.google.com/spreadsheets/d/1yjQlZSromp7bVpyOvEwntwn-pRV2x54Shpub-sbw_8g/edit#gid=0" },
-            { "task_name":"Opening support folder",
-              "task_type":"FILEMANAGER",
+            { "task_type":"FILEMANAGER",
               "task_uri":"/home/esantanche/MasterWorkspace/GTD_Activity_Support/Measuring energy consumption" }
         ]
     },
     {
         "project_name":"Rides",
         "tasks":[
-            { "task_name":"Opening Downloads folder",
-              "task_type":"FILEMANAGER",
+            { "task_type":"FILEMANAGER",
               "task_uri":"/home/esantanche/Downloads" },
-            { "task_name":"Starting video player",
-              "task_type":"VIDEOPLAYER",
+            { "task_type":"VIDEOPLAYER",
               "task_uri":"" },
-            { "task_name":"Opening pdf",
-              "task_type":"PDFVIEWER",
+            { "task_type":"PDFVIEWER",
               "task_uri":"/home/esantanche/MasterWorkspace/GTD_Reference/Well-being/Practices/InCaseOfPanic.pdf" }
         ]
     },
     {
       "project_name":"Test",
       "tasks":[
-          { "task_name":"3 urls test",
-            "task_type":"BROWSER",
+          { "task_type":"BROWSER",
             "task_uri":"https://www.ibm.com/fr-fr https://www.samsung.com/fr/ https://www.hyundai.com/fr.html" },
-          { "task_name":"Opening Downloads folder",
-            "task_type":"FILEMANAGER",
+          { "task_type":"FILEMANAGER",
             "task_uri":"/home/esantanche/Downloads" },
-          { "task_name":"Opening text file",
-            "task_type":"TEXTEDITOR",
+          { "task_type":"TEXTEDITOR",
             "task_uri":"/vol/WORKnARCH/SwProjects/leadershipcoachfortech-svelte-edition/CommandsForCoachWebsiteSvelteEdition.md" },
-          { "task_name":"Starting a script",
-            "task_type":"SHELL",
+          { "task_type":"SHELL",
             "task_uri":"/home/esantanche/MasterWorkspace/Scripts/workspace-rename.sh TESxT" },
-          { "task_name":"Starting a script2",
-            "task_type":"SHELL",
+          { "task_type":"SHELL",
             "task_uri":"show_cpu_temperature.sh" }
       ]
   }

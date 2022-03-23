@@ -20,13 +20,6 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
  
   set_default_size(400, 200);
   set_title("Project starter");
-
-  // Gtk::MessageDialog *dlg1 = new Gtk::MessageDialog("No solution exists.");
-			
-  //     dlg1->set_modal(true);
-  // dlg1->show();
-  // sleep(20);
-	// delete dlg1;
   
   // Setting the margin of the vertical box that will contain all elements
   mVBox.set_margin(5);
@@ -81,15 +74,7 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   }
   
   // FIXME  Implement double click on list
-  
-
-  // const std::vector<std::string> nDunno = mConfigurationParser.get_tasks_for_a_project("Energy Consumption");
-
-  // for (std::string iIterDunno : nDunno) {
-    
-  //   std::cout << "iIterDunno " << iIterDunno << std::endl;
-  
-  // }
+  // https://docs.gtk.org/gtk4/signal.TreeView.row-activated.html
 
   // Actually putting the column in the view
   mTreeView.append_column("Project Name", mColumns.mColProjectName);
@@ -102,62 +87,28 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_button_cancel_clicked()
 {
-  //std::cout << "This is the main window reacting on button cancel clicked." << std::endl;
+  
   close(); // Closing the window
 }
 
-// By default one row only can be selected
-
+/**
+ * @brief 
+ * 
+ */
 void MainWindow::on_button_run_clicked()
 {
-  //std::cout << "This is the main window reacti8ng on button RUN clicked." << std::endl;
 
   Glib::RefPtr<Gtk::TreeSelection> pTreeSelection = mTreeView.get_selection();
   Glib::RefPtr<Gtk::TreeModel> pModel = mTreeView.get_model();
 
   Gtk::TreeModel::iterator iter = pTreeSelection->get_selected(pModel);
 
+  // I can just do this to get the selected row because only one row can be selected
   Gtk::TreeModel::Row Row = *iter;
-
-  std::cout << "selected " << Row[mColumns.mColProjectName] << std::endl; 
-
-  //std::string boh_fixme = Row[mColumns.mColProjectName];
 
   bool Success = mConfigurationParser.run_tasks_for_a_project(Row[mColumns.mColProjectName]);
 
-  Success = false;
-
-  if (!Success) {
-
-    show_error_message();
-    sleep(20);
-    std::cout << "Failure from conf parser" << std::endl;
-
-  }
+  assert(Success == true);
   
   close(); // Closing the window
-}
-
-void MainWindow::show_error_message() 
-{
-
-  std::cout << "inside show_error_message " << std::endl;
-
-  Gtk::MessageDialog *dlg = new Gtk::MessageDialog("No solution exists.");
-			
-  dlg->set_modal(true);
-  dlg->show();
-  sleep(20);
-	delete dlg;
-
-  // mpDialog.reset(new Gtk::MessageDialog(*this, "This is an INFO MessageDialog"));
-  // mpDialog->set_secondary_text(
-  //         "And this is the secondary text that explains things.");
-  // mpDialog->set_modal(true);
-  // mpDialog->set_hide_on_close(true);
-  // mpDialog->signal_response().connect(
-  //   sigc::hide(sigc::mem_fun(*mpDialog, &Gtk::Widget::hide)));
-
-  // mpDialog->show();
-
 }

@@ -24,34 +24,7 @@
 ConfigurationParser::ConfigurationParser() 
 {
  
-  // FIXME  put this is its own method
-  FILE* pJsonFile = fopen("big.json", "rb"); // non-Windows use "r"
-  
-  char ReadBuffer[65536];
-
-  // Reading json configuration from file
-  rapidjson::FileReadStream InputStream(pJsonFile, ReadBuffer, sizeof(ReadBuffer));
-  
-  //rapidjson::Document JsonConfiguration;
-  mJsonConfiguration.ParseStream(InputStream);
-
-  assert(mJsonConfiguration.IsArray());
-
-  // FIXME why rapidjson::SizeType instead of just int?
-  // Uses SizeType instead of size_t
-  for (rapidjson::SizeType i = 0; i < mJsonConfiguration.Size(); i++) {
-    const rapidjson::Value& iProject = mJsonConfiguration[i];
-    mnProjectNames.push_back(iProject["project_name"].GetString());
-
-    // FIXME  iProject["tasks"]  
-    const rapidjson::Value& iProjectTasks = iProject["tasks"];
-    assert(iProjectTasks.IsArray());
-    for (rapidjson::SizeType j = 0; j < iProjectTasks.Size(); j++) {
-      const rapidjson::Value& iTask = iProjectTasks[j];
-    }
-  }
-
-  fclose(pJsonFile);
+  load_names_of_projects();
   
   initialize_lookup_table_for_executables();
     
@@ -59,6 +32,34 @@ ConfigurationParser::ConfigurationParser()
 
 ConfigurationParser::~ConfigurationParser()
 {
+}
+
+void ConfigurationParser::load_names_of_projects()
+{
+
+  FILE* pJsonFile = fopen("projectstarterconfiguration.json", "rb"); // non-Windows use "r"
+  
+  char ReadBuffer[65536];
+
+  // Reading json configuration from file
+  rapidjson::FileReadStream InputStream(pJsonFile, ReadBuffer, sizeof(ReadBuffer));
+  
+  //rapidjson::Document JsonConfiguration;
+  mnJsonConfiguration.ParseStream(InputStream);
+
+  assert(mnJsonConfiguration.IsArray());
+
+  // The index i could be declared as size_t being an unsigned integer iterating on the
+  // items of an array. We need to use rapidjson::SizeType instead because rapidjson uses
+  // 32 bit sizes even on a 64 bits platform
+  // See http://rapidjson.org/namespacerapidjson.html#a44eb33eaa523e36d466b1ced64b85c84
+  for (rapidjson::SizeType i = 0; i < mnJsonConfiguration.Size(); i++) {
+    const rapidjson::Value& iProject = mnJsonConfiguration[i];
+    mnProjectNames.push_back(iProject["project_name"].GetString());
+  }
+
+  fclose(pJsonFile);
+  
 }
 
 std::vector<std::string> ConfigurationParser::get_project_names()
@@ -81,9 +82,6 @@ void ConfigurationParser::initialize_lookup_table_for_executables()
   mnTaskType2Executable["TEXTEDITOR"] = "geany";
   mnTaskType2Executable["SHELL"] = "bash -c";
 
-
-  // FIXME  what about         workspace-rename.sh LNK
-
   return;
 }
 
@@ -96,13 +94,14 @@ void ConfigurationParser::initialize_lookup_table_for_executables()
  */
 std::string ConfigurationParser::get_extra_option_for_given_executable(std::string Executable, std::string ExecutableParameters) 
 {
-  // FIXME  to be completed
+  
   // Needs to return for example --new-window for firefox in some cases
+
   std::string ExtraOptions = "";
 
   if (std::regex_match(Executable, std::regex(".*firefox.*") )) {
 
-    // It adds the option -new-window if there is one only URL
+    // It adds the option --new-window if there is one only URL
     // It works with 2, 3 or more URLs
     if (!std::regex_match(ExecutableParameters, std::regex(".*\\s+.*"))) 
       ExtraOptions = "--new-window";
@@ -114,6 +113,13 @@ std::string ConfigurationParser::get_extra_option_for_given_executable(std::stri
 
 // FIXME  add comments Doxygen style
 
+/**
+ * @brief 
+ * 
+ * @param Executable 
+ * @return true 
+ * @return false 
+ */
 bool ConfigurationParser::needs_to_go_to_the_background(std::string Executable)
 {
   bool NeedsToGoToTheBackground = false;
@@ -129,36 +135,26 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
 
   bool ProjectFound = false;
 
-  for (rapidjson::SizeType i = 0; i < mJsonConfiguration.Size(); i++)
+  for (rapidjson::SizeType i = 0; i < mnJsonConfiguration.Size(); i++)
   {
-    const rapidjson::Value &iProject = mJsonConfiguration[i];
-    // std::cout << i << "---" << iProject["project_name"].GetString()  << std::endl;
-    //mnProjectNames.push_back(iProject["project_name"].GetString());
+    const rapidjson::Value &iProject = mnJsonConfiguration[i];
 
     if (iProject["project_name"].GetString() == ProjectName ) {
-
-      //std::cout << "got it" << ProjectName << std::endl;
 
       ProjectFound = true;
 
       const rapidjson::Value &iProjectTasks = iProject["tasks"];
 
-      // FIXME  what's this rapidjson::SizeType about?
       for (rapidjson::SizeType j = 0; j < iProjectTasks.Size(); j++)
       {
         const rapidjson::Value &iTask = iProjectTasks[j];
-      
-        // I have to find a way to specify --new-window to use with firefox 
-        // maybe I add an attribute "task_options"
-
-        // FIXME  Do I actually need task_name?
 
         const std::string cTaskType = (std::string) iTask["task_type"].GetString();
         std::string TaskURI = (std::string) iTask["task_uri"].GetString();
 
         // If the task type is "BROWSER", TaskURI contains one or many URLs (or URIs).
         // They don't have spaces.
-        // But if the task is different, TaskURI may contain a single path with spaces.
+        // But if the task is different, TaskURI contains a single path with spaces.
         // In this case, I add quotations otherwise the path would be interprested as many.
 
         if (cTaskType != "BROWSER" && !TaskURI.empty()) 
@@ -170,12 +166,9 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
 
         std::string Command = cExecutable + " " + cExtraOptions + " " + TaskURI;
 
-        // FIXME maybe add this so that you don't get the nohup.out: >/dev/null 2>&1 
         if (needs_to_go_to_the_background(cExecutable)) 
-            Command = "nohup " + Command + " &";
+            Command = "nohup " + Command + ">/dev/null 2>&1 &";
         
-        std::cout << Command << std::endl;
-
         const char *cpCommand = Command.c_str();
 
         system(cpCommand);
