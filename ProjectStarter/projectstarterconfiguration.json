@@ -33,5 +33,18 @@
           { "task_type":"SHELL",
             "task_uri":"show_cpu_temperature.sh" }
       ]
-  }
+    },
+    {
+      "project_name":"C++",
+      "tasks":[
+          { "task_type":"BROWSER",
+            "task_uri":"file:///home/esantanche/MasterWorkspace/GTD_Reference/C++/C++%20Hub.html#" },
+          { "task_type":"FILEMANAGER",
+            "task_uri":"/vol/WORKnARCH/SwProjects/CppBitsAndPieces/ProjectStarter" },
+          { "task_type":"SHELL",
+            "task_uri":"/home/esantanche/MasterWorkspace/Scripts/workspace-rename.sh CPP" },
+          { "task_type":"TERMINAL",
+            "task_uri":"/vol/WORKnARCH/SwProjects/CppBitsAndPieces/ProjectStarter" }
+      ]
+    }
 ]

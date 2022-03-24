@@ -44,7 +44,6 @@ void ConfigurationParser::load_names_of_projects()
   // Reading json configuration from file
   rapidjson::FileReadStream InputStream(pJsonFile, ReadBuffer, sizeof(ReadBuffer));
   
-  //rapidjson::Document JsonConfiguration;
   mnJsonConfiguration.ParseStream(InputStream);
 
   assert(mnJsonConfiguration.IsArray());
@@ -82,8 +81,16 @@ void ConfigurationParser::initialize_lookup_table_for_executables()
   mnTaskType2Executable["TEXTEDITOR"] = "geany";
   mnTaskType2Executable["SHELL"] = "bash -c";
 
+  // The TaskURI will be a folder where the terminal should start in
+  // The executable should contain the substring "terminal" for the command to execute
+  // to be assembled correctly. For example, this app may call the terminal app tilda incorrectly
+  // I tested gnome-terminal and xfce4-terminal
+  mnTaskType2Executable["TERMINAL"] = "gnome-terminal"; 
+
   return;
 }
+
+// FIXME  should I use the namespace std? 
 
 /**
  * @brief 
@@ -92,12 +99,13 @@ void ConfigurationParser::initialize_lookup_table_for_executables()
  * @param ExecutableParameters 
  * @return std::string 
  */
-std::string ConfigurationParser::get_extra_option_for_given_executable(std::string Executable, std::string ExecutableParameters) 
+std::string ConfigurationParser::put_command_together(std::string Executable, std::string ExecutableParameters) 
 {
   
   // Needs to return for example --new-window for firefox in some cases
 
   std::string ExtraOptions = "";
+  std::string Command;
 
   if (std::regex_match(Executable, std::regex(".*firefox.*") )) {
 
@@ -106,9 +114,19 @@ std::string ConfigurationParser::get_extra_option_for_given_executable(std::stri
     if (!std::regex_match(ExecutableParameters, std::regex(".*\\s+.*"))) 
       ExtraOptions = "--new-window";
 
+    Command = Executable + " " + ExtraOptions + " " + ExecutableParameters;
+
+  } else if (std::regex_match(Executable, std::regex(".*terminal.*"))) {
+
+    Command = Executable + " --working-directory=" + ExecutableParameters;
+
+  } else {
+
+    Command = Executable + " " + ExecutableParameters;
+
   }
 
-  return ExtraOptions;
+  return Command;
 }
 
 // FIXME  add comments Doxygen style
@@ -124,7 +142,7 @@ bool ConfigurationParser::needs_to_go_to_the_background(std::string Executable)
 {
   bool NeedsToGoToTheBackground = false;
 
-  if (std::regex_match(Executable, std::regex(".*(vlc|evince|nautilus|geany).*") )) 
+  if (std::regex_match(Executable, std::regex(".*(vlc|evince|nautilus|geany|terminal).*") )) 
     NeedsToGoToTheBackground = true;
 
   return NeedsToGoToTheBackground;
@@ -162,9 +180,7 @@ bool ConfigurationParser::run_tasks_for_a_project(Glib::ustring ProjectName)
 
         const std::string cExecutable = mnTaskType2Executable[cTaskType];
 
-        const std::string cExtraOptions = get_extra_option_for_given_executable(cExecutable, TaskURI);
-
-        std::string Command = cExecutable + " " + cExtraOptions + " " + TaskURI;
+        std::string Command = put_command_together(cExecutable, TaskURI);
 
         if (needs_to_go_to_the_background(cExecutable)) 
             Command = "nohup " + Command + ">/dev/null 2>&1 &";

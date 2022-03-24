@@ -1,3 +1,14 @@
+/**
+ * @file mainwindow.cc
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-24
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include "mainwindow.h"
 
 #include <gtkmm/box.h>
@@ -13,7 +24,10 @@
 #include "include/rapidjson/stringbuffer.h"
 #include "include/rapidjson/filereadstream.h"
 
-
+/**
+ * @brief Construct a new Main Window:: Main Window object
+ * 
+ */
 MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Cancel"),
       mButtonRun("Run")
 {
@@ -65,7 +79,6 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
 
   const std::vector<std::string> nProjectNames = mConfigurationParser.get_project_names();
 
-
   for (std::string iProjectName : nProjectNames) {
     
     auto Row = *(mpTreeModel->append());
@@ -73,18 +86,8 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   
   }
   
-  // FIXME  Implement double click on list
-  // https://docs.gtk.org/gtk4/signal.TreeView.row-activated.html
-  // https://docs.gtk.org/gtk4/signal.TreeView.row-activated.html
-
   // Actually putting the column in the view
   mTreeView.append_column("Project Name", mColumns.mColProjectName);
-
-
-  // // When the run button is clicked, the function on_button_run_clicked is called
-  // mButtonRun.signal_clicked().connect( sigc::mem_fun(*this,
-  //             &MainWindow::on_button_run_clicked) );
-  
 
   // Connecting double click on list to callback on_treeview_row_activated
   mTreeView.signal_row_activated().connect( sigc::mem_fun(*this,
@@ -102,22 +105,25 @@ void MainWindow::on_button_cancel_clicked()
   close(); // Closing the window
 }
 
-// void ExampleWindow::on_treeview_row_activated(const Gtk::TreeModel::Path& path,
-//         Gtk::TreeViewColumn* /* column */)
-
 void MainWindow::on_treeview_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)
 {
-  std::cout << "double click detected" << std::endl;
-  // close(); // Closing the window
+
+  get_selected_project_and_run_its_tasks();
+
 }
-
-
 
 /**
  * @brief 
  * 
  */
 void MainWindow::on_button_run_clicked()
+{
+
+  get_selected_project_and_run_its_tasks();
+
+}
+
+void MainWindow::get_selected_project_and_run_its_tasks()
 {
 
   Glib::RefPtr<Gtk::TreeSelection> pTreeSelection = mTreeView.get_selection();
@@ -128,9 +134,9 @@ void MainWindow::on_button_run_clicked()
   // I can just do this to get the selected row because only one row can be selected
   Gtk::TreeModel::Row Row = *iter;
 
-  bool Success = mConfigurationParser.run_tasks_for_a_project(Row[mColumns.mColProjectName]);
+  const bool cSuccess = mConfigurationParser.run_tasks_for_a_project(Row[mColumns.mColProjectName]);
 
-  assert(Success == true);
+  assert(cSuccess == true);
   
   close(); // Closing the window
 }

@@ -29,7 +29,7 @@ protected:
 
   void initialize_lookup_table_for_executables();
   void load_names_of_projects();
-  std::string get_extra_option_for_given_executable(std::string Executable, std::string ExecutableParameters);
+  std::string put_command_together(std::string Executable, std::string ExecutableParameters);
   bool needs_to_go_to_the_background(std::string Executable);
 
 };
