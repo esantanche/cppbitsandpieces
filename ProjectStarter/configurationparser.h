@@ -11,26 +11,30 @@
 
 #include "include/rapidjson/document.h"
 
+using namespace std;
+
 class ConfigurationParser 
 {
+
 public:
+
   ConfigurationParser();
   virtual ~ConfigurationParser();
 
-  std::vector<std::string> get_project_names();
+  vector<string> get_project_names();
   
   bool run_tasks_for_a_project(Glib::ustring ProjectName);
 
 protected:
   
-  std::map<std::string, std::string> mnTaskType2Executable;
-  std::vector<std::string> mnProjectNames;
+  map<string, string> mnTaskType2Executable;
+  vector<string> mnProjectNames;
   rapidjson::Document mnJsonConfiguration;
 
   void initialize_lookup_table_for_executables();
   void load_names_of_projects();
-  std::string put_command_together(std::string Executable, std::string ExecutableParameters);
-  bool needs_to_go_to_the_background(std::string Executable);
+  string put_command_together(string Executable, string ExecutableParameters);
+  bool needs_to_go_to_the_background(string Executable);
 
 };
 

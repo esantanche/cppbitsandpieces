@@ -28,7 +28,7 @@ protected:
   Gtk::Button mButtonCancel;  // Button cancel to exit without running anything
 
   // Tree model columns. These are the columns (1) that you find in the list
-  // It's the column 
+  // It's the column with the project names
   class ModelColumns : public Gtk::TreeModel::ColumnRecord
   {
   public:
@@ -51,7 +51,6 @@ protected:
   void get_selected_project_and_run_its_tasks();
   void on_button_run_clicked();
   void on_button_cancel_clicked();
-  // void on_treeview_row_activated();
   void on_treeview_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
 
 };

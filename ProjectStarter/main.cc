@@ -1,6 +1,19 @@
+/**
+ * @file main.cc
+ * @author Emanuele Santanche (http://emanuelesantanche.com/)
+ * @brief Just the main of the app. It runs the main window
+ */
+
 #include "mainwindow.h"
 #include <gtkmm/application.h>
 
+/**
+ * @brief The main
+ * 
+ * @param argc Not used
+ * @param argv Not used
+ * @return int Exit code
+ */
 int main(int argc, char *argv[])
 {
   

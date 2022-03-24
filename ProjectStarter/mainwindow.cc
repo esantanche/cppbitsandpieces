@@ -1,12 +1,7 @@
 /**
  * @file mainwindow.cc
- * @author your name (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2022-03-24
- * 
- * @copyright Copyright (c) 2022
- * 
+ * @author Emanuele Santanche (http://emanuelesantanche.com/)
+ * @brief This is the main (and only) window 
  */
 
 #include "mainwindow.h"
@@ -26,7 +21,6 @@
 
 /**
  * @brief Construct a new Main Window:: Main Window object
- * 
  */
 MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Cancel"),
       mButtonRun("Run")
@@ -68,8 +62,8 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   mButtonRun.signal_clicked().connect( sigc::mem_fun(*this,
               &MainWindow::on_button_run_clicked) );
   
-  // Now creating the list with the sinlge column
-  // Getting a ref to a TreeModel
+  // Now creating the list with the single column
+  // Getting a ptr to a TreeModel
   mpTreeModel = Gtk::ListStore::create(mColumns);
 
   // Now setting the model above to be used in the TreeView
@@ -77,9 +71,9 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
 
   // Now creating the rows in the list
 
-  const std::vector<std::string> nProjectNames = mConfigurationParser.get_project_names();
+  const vector<string> nProjectNames = mConfigurationParser.get_project_names();
 
-  for (std::string iProjectName : nProjectNames) {
+  for (string iProjectName : nProjectNames) {
     
     auto Row = *(mpTreeModel->append());
     Row[mColumns.mColProjectName] = iProjectName;
@@ -99,12 +93,21 @@ MainWindow::~MainWindow()
 {
 }
 
+/**
+ * @brief When the cancel button is clicked, just close the window
+ */
 void MainWindow::on_button_cancel_clicked()
 {
   
   close(); // Closing the window
 }
 
+/**
+ * @brief If there is a double click on a row, get the selected project and run its tasks
+ * 
+ * @param path Not used
+ * @param column Not used
+ */
 void MainWindow::on_treeview_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)
 {
 
@@ -113,8 +116,7 @@ void MainWindow::on_treeview_row_activated(const Gtk::TreeModel::Path& path, Gtk
 }
 
 /**
- * @brief 
- * 
+ * @brief  If che button run is clicked, get the selected project and run its tasks
  */
 void MainWindow::on_button_run_clicked()
 {
@@ -123,6 +125,9 @@ void MainWindow::on_button_run_clicked()
 
 }
 
+/**
+ * @brief Get the selected project and run its tasks
+ */
 void MainWindow::get_selected_project_and_run_its_tasks()
 {
 
@@ -136,6 +141,7 @@ void MainWindow::get_selected_project_and_run_its_tasks()
 
   const bool cSuccess = mConfigurationParser.run_tasks_for_a_project(Row[mColumns.mColProjectName]);
 
+  // The given name of project (Row[mColumns.mColProjectName]) should always be found
   assert(cSuccess == true);
   
   close(); // Closing the window

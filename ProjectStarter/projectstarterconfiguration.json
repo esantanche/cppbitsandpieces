@@ -16,7 +16,7 @@
             { "task_type":"VIDEOPLAYER",
               "task_uri":"" },
             { "task_type":"PDFVIEWER",
-              "task_uri":"/home/esantanche/MasterWorkspace/GTD_Reference/Well-being/Practices/InCaseOfPanic.pdf" }
+              "task_uri":"/home/esantanche/MasterWorkspace/INBOX/Notes From Teenage Liberation Handbook.pdf" }
         ]
     },
     {
@@ -27,9 +27,9 @@
           { "task_type":"FILEMANAGER",
             "task_uri":"/home/esantanche/Downloads" },
           { "task_type":"TEXTEDITOR",
-            "task_uri":"/vol/WORKnARCH/SwProjects/leadershipcoachfortech-svelte-edition/CommandsForCoachWebsiteSvelteEdition.md" },
+            "task_uri":"/home/esantanche/MasterWorkspace/INBOX/2022-03-22-20-31-https   developer lsst io.txt" },
           { "task_type":"SHELL",
-            "task_uri":"/home/esantanche/MasterWorkspace/Scripts/workspace-rename.sh TESxT" },
+            "task_uri":"/home/esantanche/MasterWorkspace/Scripts/workspace-rename.sh TEST" },
           { "task_type":"SHELL",
             "task_uri":"show_cpu_temperature.sh" }
       ]
