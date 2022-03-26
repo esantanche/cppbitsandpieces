@@ -26,7 +26,7 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
       mButtonRun("Run")
 {
  
-  set_default_size(400, 200);
+  set_default_size(400, 400);
   set_title("Project starter");
   
   // Setting the margin of the vertical box that will contain all elements
@@ -35,7 +35,7 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   
   // Putting the TreeView inside the scrolled window and setting its height
   mScrolledWindow.set_child(mTreeView);
-  mScrolledWindow.set_min_content_height(200);
+  mScrolledWindow.set_min_content_height(400);
   
   // In the vertical box the scrolled window that contains the TreeView will be above.
   // The box that contains the buttons will be below
