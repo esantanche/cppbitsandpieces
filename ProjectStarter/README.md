@@ -14,3 +14,4 @@ See the document JSON_CONFIG_FORMAT.md for an explanation of the information you
 provide for the app to open the files you need.
 
 The JSON library I use is: https://github.com/Tencent/rapidjson/
+
