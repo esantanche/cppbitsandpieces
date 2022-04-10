@@ -105,6 +105,7 @@ void ConfigurationParser::initialize_lookup_table_for_executables()
   mnTaskType2Executable["PDFVIEWER"] = "evince";
   mnTaskType2Executable["TEXTEDITOR"] = "geany";
   mnTaskType2Executable["SHELL"] = "bash -c";
+  mnTaskType2Executable["DOC"] = "libreoffice";
 
   // The TaskURI will be a folder where the terminal should start in
   // The executable should contain the substring "terminal" for the command to execute
@@ -166,7 +167,7 @@ bool ConfigurationParser::needs_to_go_to_the_background(string Executable)
 {
   bool NeedsToGoToTheBackground = false;
 
-  if (regex_match(Executable, regex(".*(vlc|evince|nautilus|geany|terminal).*") )) 
+  if (regex_match(Executable, regex(".*(vlc|evince|nautilus|geany|terminal|libreoffice).*") )) 
     NeedsToGoToTheBackground = true;
 
   return NeedsToGoToTheBackground;

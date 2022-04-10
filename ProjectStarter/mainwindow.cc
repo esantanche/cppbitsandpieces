@@ -87,6 +87,8 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   mTreeView.signal_row_activated().connect( sigc::mem_fun(*this,
               &MainWindow::on_treeview_row_activated) );
     
+  // this->signal_key_press_event().connect( sigc::mem_fun( *this, &MyWindow::onKeyPress ) );
+
 }
 
 MainWindow::~MainWindow()

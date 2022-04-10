@@ -9,6 +9,8 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/messagedialog.h>
 
+// #include <gdk/gdk.h>
+
 #include <string>
 
 #include "configurationparser.h"
@@ -37,6 +39,8 @@ protected:
     { add(mColProjectName); }
 
     Gtk::TreeModelColumn<Glib::ustring> mColProjectName;
+
+    // bool onKeyPress(GdkEventKey*);
     
   };
 
