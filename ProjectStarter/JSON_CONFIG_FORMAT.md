@@ -63,3 +63,11 @@ The executables gnome-terminal and xfce4-terminal are properly supported because
 'terminal'. Other terminal apps may not be correctly treated.
 
 See method needs_to_go_to_the_background.
+
+## DOC
+
+It opens a document in Libreoffice. The property task_uri is the path of the file.
+
+There can be one only path and spaces are fine.
+
+
