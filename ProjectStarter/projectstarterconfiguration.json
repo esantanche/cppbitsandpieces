@@ -39,7 +39,7 @@
     },
     {
       "project_name":"C++",
-      "priority":19,
+      "priority":0,
       "tasks":[
           { "task_type":"BROWSER",
             "task_uri":"file:///home/esantanche/MasterWorkspace/GTD_Reference/C++/C++%20Hub.html#" },

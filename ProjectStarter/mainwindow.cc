@@ -25,6 +25,8 @@
 MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Cancel"),
       mButtonRun("Run")
 {
+
+  // FIXME  before even starting ask the configuration parser if there is an error
  
   set_default_size(400, 400);
   set_title("Project starter");
@@ -71,9 +73,8 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
 
   // Now creating the rows in the list
 
+
   const vector<string> nProjectNames = mConfigurationParser.get_project_names();
-
-
 
   for (string iProjectName : nProjectNames) {
     
@@ -89,8 +90,6 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   mTreeView.signal_row_activated().connect( sigc::mem_fun(*this,
               &MainWindow::on_treeview_row_activated) );
     
-  // this->signal_key_press_event().connect( sigc::mem_fun( *this, &MyWindow::onKeyPress ) );
-
 }
 
 MainWindow::~MainWindow()

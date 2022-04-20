@@ -4,6 +4,9 @@
  * @brief This class loads and parses the configuration file.
  * It also puts the commands to run together and actually runs the tasks 
  * for a project when the user chooses the project.
+ * 
+ * @ref  https://www.geeksforgeeks.org/sorting-a-map-by-value-in-c-stl/
+ * @ref  https://stackoverflow.com/questions/56143678/making-a-vector-of-pairs-sorting-it-and-then-extract-the-vectors-from-it
  */
 
 #include "configurationparser.h"
@@ -34,6 +37,8 @@ ConfigurationParser::ConfigurationParser()
 {
  
   load_names_of_projects();
+
+  // FIXME  if the function above returns false, the main window should catch the situation and manage it
   
   initialize_lookup_table_for_executables();
     
@@ -55,6 +60,9 @@ bool cmp(pair<string, int>& a,
 void ConfigurationParser::load_names_of_projects()
 {
 
+  // FIXME  this method should return a bool as false if the json file is wrong
+
+
   FILE* pJsonFile = fopen("projectstarterconfiguration.json", "rb"); // non-Windows use "r"
   
   char ReadBuffer[65536];
@@ -74,11 +82,8 @@ void ConfigurationParser::load_names_of_projects()
 
   assert(mnJsonConfiguration.IsArray());
 
-  // FIXME  https://www.geeksforgeeks.org/sorting-a-map-by-value-in-c-stl/
 
-  // FIXME  name to fix
-
-  // FIXME  eliminate projects with priority zero
+  // FIXME  there may be names to fix
 
   // The index i could be declared as size_t being an unsigned integer iterating on the
   // items of an array. We need to use rapidjson::SizeType instead because rapidjson uses
@@ -86,31 +91,19 @@ void ConfigurationParser::load_names_of_projects()
   // See http://rapidjson.org/namespacerapidjson.html#a44eb33eaa523e36d466b1ced64b85c84
   for (rapidjson::SizeType i = 0; i < mnJsonConfiguration.Size(); i++) {
     const rapidjson::Value& iProject = mnJsonConfiguration[i];
-    const pair <string, int> fixmemethisname = make_pair(iProject["project_name"].GetString(), iProject["priority"].GetInt());
-    mnProjectNames.push_back(fixmemethisname);
-    // cout << iProject["project_name"].GetString() << iProject["priority"].GetInt() << endl;
+    const string cProjectName = iProject["project_name"].GetString();
+    const int cProjectPriority = iProject["priority"].GetInt();
+    const pair <string, int> fixmemethisname = make_pair(cProjectName, cProjectPriority);
+    if (cProjectPriority > 0)
+      mnProjectNames.push_back(fixmemethisname);
   }
 
   fclose(pJsonFile);
 
-sort(mnProjectNames.begin(), mnProjectNames.end(), cmp);
+  sort(mnProjectNames.begin(), mnProjectNames.end(), cmp);
 
+  // FIXME  a lot of cleaning up
 
-// for ( auto it = mnProjectNames.begin(); it != mnProjectNames.end(); it++ )
-// {
-//    // To get hold of the class pointers:
-//   //  auto pClass1 = it->first;
-//   //  auto pClass2 = it->second;
-//     cout << "in loop" << it->first << it->second << endl;
-
-// }
-
-
-
-// https://stackoverflow.com/questions/56143678/making-a-vector-of-pairs-sorting-it-and-then-extract-the-vectors-from-it
-
-  // FIXME  here I have to order the names by priority
-  
 }
 
 /**
@@ -122,33 +115,12 @@ vector<string> ConfigurationParser::get_project_names()
 {
   vector<string> ListOfOrderedProjectsNames;
 
-// FIXME  name it to fix
+  for ( auto iProject = mnProjectNames.begin(); iProject != mnProjectNames.end(); iProject++ )
+  {
+      ListOfOrderedProjectsNames.push_back(iProject->first);
+  }
 
-for ( auto it = mnProjectNames.begin(); it != mnProjectNames.end(); it++ )
-{
-    ListOfOrderedProjectsNames.push_back(it->first);
-}
-
-//sort(ListOfOrderedProjectsNames.begin(), ListOfOrderedProjectsNames.end());
-
-
-// FIXME  it2 name to change
-
-// for ( auto it2 = ListOfOrderedProjectsNames.begin(); it2 != ListOfOrderedProjectsNames.end(); it2++ )
-// {
-//    // To get hold of the class pointers:
-//   //  auto pClass1 = it->first;
-//   //  auto pClass2 = it->second;
-//     cout << "in loop" << *it2 << endl;
-
-//     // ListOfOrderedProjectsNames.push_back(it->first);
-
-// }
-
-// cout << "size of list" << ListOfOrderedProjectsNames.size() << endl;
-
-return ListOfOrderedProjectsNames;
-
+  return ListOfOrderedProjectsNames;
 }
 
 /**
