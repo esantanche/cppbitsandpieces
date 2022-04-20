@@ -28,7 +28,7 @@ public:
 protected:
   
   map<string, string> mnTaskType2Executable;
-  vector<pair<string, int> > mnProjectNames;
+  vector<pair<string, int>> mnProjectNames;
   //vector<string> mnProjectNames;
   rapidjson::Document mnJsonConfiguration;
 

@@ -73,6 +73,8 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
 
   const vector<string> nProjectNames = mConfigurationParser.get_project_names();
 
+
+
   for (string iProjectName : nProjectNames) {
     
     auto Row = *(mpTreeModel->append());

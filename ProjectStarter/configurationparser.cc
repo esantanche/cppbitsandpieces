@@ -88,9 +88,24 @@ void ConfigurationParser::load_names_of_projects()
     const rapidjson::Value& iProject = mnJsonConfiguration[i];
     const pair <string, int> fixmemethisname = make_pair(iProject["project_name"].GetString(), iProject["priority"].GetInt());
     mnProjectNames.push_back(fixmemethisname);
+    // cout << iProject["project_name"].GetString() << iProject["priority"].GetInt() << endl;
   }
 
   fclose(pJsonFile);
+
+sort(mnProjectNames.begin(), mnProjectNames.end(), cmp);
+
+
+// for ( auto it = mnProjectNames.begin(); it != mnProjectNames.end(); it++ )
+// {
+//    // To get hold of the class pointers:
+//   //  auto pClass1 = it->first;
+//   //  auto pClass2 = it->second;
+//     cout << "in loop" << it->first << it->second << endl;
+
+// }
+
+
 
 // https://stackoverflow.com/questions/56143678/making-a-vector-of-pairs-sorting-it-and-then-extract-the-vectors-from-it
 
@@ -107,9 +122,33 @@ vector<string> ConfigurationParser::get_project_names()
 {
   vector<string> ListOfOrderedProjectsNames;
 
+// FIXME  name it to fix
+
+for ( auto it = mnProjectNames.begin(); it != mnProjectNames.end(); it++ )
+{
+    ListOfOrderedProjectsNames.push_back(it->first);
+}
+
+//sort(ListOfOrderedProjectsNames.begin(), ListOfOrderedProjectsNames.end());
 
 
-  return mnProjectNames;
+// FIXME  it2 name to change
+
+// for ( auto it2 = ListOfOrderedProjectsNames.begin(); it2 != ListOfOrderedProjectsNames.end(); it2++ )
+// {
+//    // To get hold of the class pointers:
+//   //  auto pClass1 = it->first;
+//   //  auto pClass2 = it->second;
+//     cout << "in loop" << *it2 << endl;
+
+//     // ListOfOrderedProjectsNames.push_back(it->first);
+
+// }
+
+// cout << "size of list" << ListOfOrderedProjectsNames.size() << endl;
+
+return ListOfOrderedProjectsNames;
+
 }
 
 /**

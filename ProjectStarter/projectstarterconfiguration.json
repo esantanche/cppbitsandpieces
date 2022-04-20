@@ -1,7 +1,7 @@
 [
     {
         "project_name":"Energy Consumption",
-        "priority":"10",
+        "priority":1000,
         "tasks":[
             { "task_type":"BROWSER",
               "task_uri":"https://docs.google.com/spreadsheets/d/1yjQlZSromp7bVpyOvEwntwn-pRV2x54Shpub-sbw_8g/edit#gid=0" },
@@ -11,7 +11,7 @@
     },
     {
         "project_name":"Rides",
-        "priority":"102",
+        "priority":102,
         "tasks":[
             { "task_type":"FILEMANAGER",
               "task_uri":"/home/esantanche/Downloads" },
@@ -23,7 +23,7 @@
     },
     {
       "project_name":"Test",
-      "priority":"1",
+      "priority":1,
       "tasks":[
           { "task_type":"BROWSER",
             "task_uri":"https://www.ibm.com/fr-fr https://www.samsung.com/fr/ https://www.hyundai.com/fr.html" },
@@ -39,7 +39,7 @@
     },
     {
       "project_name":"C++",
-      "priority":"19",
+      "priority":19,
       "tasks":[
           { "task_type":"BROWSER",
             "task_uri":"file:///home/esantanche/MasterWorkspace/GTD_Reference/C++/C++%20Hub.html#" },
