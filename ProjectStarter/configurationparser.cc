@@ -43,6 +43,12 @@ ConfigurationParser::~ConfigurationParser()
 {
 }
 
+bool cmp(pair<string, int>& a,
+         pair<string, int>& b)
+{
+    return a.second < b.second;
+}
+
 /**
  * @brief Loads the entire json file and creates the vector that contains the names of the projects.
  */
@@ -68,16 +74,27 @@ void ConfigurationParser::load_names_of_projects()
 
   assert(mnJsonConfiguration.IsArray());
 
+  // FIXME  https://www.geeksforgeeks.org/sorting-a-map-by-value-in-c-stl/
+
+  // FIXME  name to fix
+
+  // FIXME  eliminate projects with priority zero
+
   // The index i could be declared as size_t being an unsigned integer iterating on the
   // items of an array. We need to use rapidjson::SizeType instead because rapidjson uses
   // 32 bit sizes even on a 64 bits platform
   // See http://rapidjson.org/namespacerapidjson.html#a44eb33eaa523e36d466b1ced64b85c84
   for (rapidjson::SizeType i = 0; i < mnJsonConfiguration.Size(); i++) {
     const rapidjson::Value& iProject = mnJsonConfiguration[i];
-    mnProjectNames.push_back(iProject["project_name"].GetString());
+    const pair <string, int> fixmemethisname = make_pair(iProject["project_name"].GetString(), iProject["priority"].GetInt());
+    mnProjectNames.push_back(fixmemethisname);
   }
 
   fclose(pJsonFile);
+
+// https://stackoverflow.com/questions/56143678/making-a-vector-of-pairs-sorting-it-and-then-extract-the-vectors-from-it
+
+  // FIXME  here I have to order the names by priority
   
 }
 
@@ -88,6 +105,9 @@ void ConfigurationParser::load_names_of_projects()
  */
 vector<string> ConfigurationParser::get_project_names()
 {
+  vector<string> ListOfOrderedProjectsNames;
+
+
 
   return mnProjectNames;
 }

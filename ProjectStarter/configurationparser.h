@@ -28,7 +28,8 @@ public:
 protected:
   
   map<string, string> mnTaskType2Executable;
-  vector<string> mnProjectNames;
+  vector<pair<string, int> > mnProjectNames;
+  //vector<string> mnProjectNames;
   rapidjson::Document mnJsonConfiguration;
 
   void initialize_lookup_table_for_executables();
