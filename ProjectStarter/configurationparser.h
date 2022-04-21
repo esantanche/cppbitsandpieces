@@ -25,12 +25,15 @@ public:
   
   bool run_tasks_for_a_project(Glib::ustring ProjectName);
 
+  bool json_configuration_is_correct();
+
 protected:
   
   map<string, string> mnTaskType2Executable;
   vector<pair<string, int>> mnProjectNames;
   //vector<string> mnProjectNames;
   rapidjson::Document mnJsonConfiguration;
+  bool mJsonConfigurationIsCorrect;
 
   void initialize_lookup_table_for_executables();
   void load_names_of_projects();

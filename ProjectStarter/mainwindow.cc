@@ -26,8 +26,10 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
       mButtonRun("Run")
 {
 
-  // FIXME  before even starting ask the configuration parser if there is an error
+  const bool JsonConfigurationOk = mConfigurationParser.json_configuration_is_correct();
  
+  //cout << "json conf correct: " << JsonConfigurationOk  << endl;
+
   set_default_size(400, 400);
   set_title("Project starter");
   
@@ -41,6 +43,14 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   
   // In the vertical box the scrolled window that contains the TreeView will be above.
   // The box that contains the buttons will be below
+  // FIXME 
+  // FIXME  make textview not editable
+  mVBox.append(mTextView);
+  Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer1, m_refTextBuffer2;
+
+  m_refTextBuffer1 = Gtk::TextBuffer::create();
+  m_refTextBuffer1->set_text("This is  ggtttthe text from TextBuffer #1.");
+  mTextView.set_buffer(m_refTextBuffer1);
   mVBox.append(mScrolledWindow);
   mVBox.append(mButtonBox);
 

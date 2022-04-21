@@ -35,6 +35,8 @@ using namespace std;
  */
 ConfigurationParser::ConfigurationParser() 
 {
+
+  // mJsonConfigurationIsCorrect = true;
  
   load_names_of_projects();
 
@@ -62,6 +64,8 @@ void ConfigurationParser::load_names_of_projects()
 
   // FIXME  this method should return a bool as false if the json file is wrong
 
+  mJsonConfigurationIsCorrect = true;
+
 
   FILE* pJsonFile = fopen("projectstarterconfiguration.json", "rb"); // non-Windows use "r"
   
@@ -74,37 +78,50 @@ void ConfigurationParser::load_names_of_projects()
 
   if (mnJsonConfiguration.HasParseError()) {
 
+    mJsonConfigurationIsCorrect = false;
+
     cout << "There is an error in the json configuration file." << endl;
     cout << "Probably it's a missing comma or parentesis." << endl;
 
-    abort();
+  } else {
+
+    assert(mnJsonConfiguration.IsArray());
+
+    // FIXME  there may be names to fix
+
+    // The index i could be declared as size_t being an unsigned integer iterating on the
+    // items of an array. We need to use rapidjson::SizeType instead because rapidjson uses
+    // 32 bit sizes even on a 64 bits platform
+    // See http://rapidjson.org/namespacerapidjson.html#a44eb33eaa523e36d466b1ced64b85c84
+    for (rapidjson::SizeType i = 0; i < mnJsonConfiguration.Size(); i++) {
+      const rapidjson::Value& iProject = mnJsonConfiguration[i];
+      const string cProjectName = iProject["project_name"].GetString();
+      const int cProjectPriority = iProject["priority"].GetInt();
+      const pair <string, int> fixmemethisname = make_pair(cProjectName, cProjectPriority);
+      if (cProjectPriority > 0)
+        mnProjectNames.push_back(fixmemethisname);
+    }
+
+    fclose(pJsonFile);
+
+    sort(mnProjectNames.begin(), mnProjectNames.end(), cmp);
+
   }
-
-  assert(mnJsonConfiguration.IsArray());
-
-
-  // FIXME  there may be names to fix
-
-  // The index i could be declared as size_t being an unsigned integer iterating on the
-  // items of an array. We need to use rapidjson::SizeType instead because rapidjson uses
-  // 32 bit sizes even on a 64 bits platform
-  // See http://rapidjson.org/namespacerapidjson.html#a44eb33eaa523e36d466b1ced64b85c84
-  for (rapidjson::SizeType i = 0; i < mnJsonConfiguration.Size(); i++) {
-    const rapidjson::Value& iProject = mnJsonConfiguration[i];
-    const string cProjectName = iProject["project_name"].GetString();
-    const int cProjectPriority = iProject["priority"].GetInt();
-    const pair <string, int> fixmemethisname = make_pair(cProjectName, cProjectPriority);
-    if (cProjectPriority > 0)
-      mnProjectNames.push_back(fixmemethisname);
-  }
-
-  fclose(pJsonFile);
-
-  sort(mnProjectNames.begin(), mnProjectNames.end(), cmp);
 
   // FIXME  a lot of cleaning up
 
+  // FIXME  probably 
+
+  //return JsonConfigurationIsCorrect;
+
 }
+
+bool ConfigurationParser::json_configuration_is_correct()
+{
+
+  return mJsonConfigurationIsCorrect;
+}
+
 
 /**
  * @brief Returns the names of the projects
