@@ -26,7 +26,7 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
       mButtonRun("Run")
 {
 
-  const bool JsonConfigurationOk = mConfigurationParser.json_configuration_is_correct();
+  mJsonConfigurationOk = mConfigurationParser.json_configuration_is_correct();
  
   //cout << "json conf correct: " << JsonConfigurationOk  << endl;
 
@@ -36,70 +36,80 @@ MainWindow::MainWindow() : mVBox(Gtk::Orientation::VERTICAL), mButtonCancel("Can
   // Setting the margin of the vertical box that will contain all elements
   mVBox.set_margin(5);
   set_child(mVBox);
+
+  if (mJsonConfigurationOk) {
+
+    // Putting the TreeView inside the scrolled window and setting its height
+    mScrolledWindow.set_child(mTreeView);
+    mScrolledWindow.set_min_content_height(400);
+    mVBox.append(mScrolledWindow);
+
+  } else {
+
+    mVBox.append(mLabelMessageJsonFileError);
+    mLabelMessageJsonFileError.set_text("The JSON configuration file is wrong.\nProbably there is a comma missing or a similar problem.\n");
   
-  // Putting the TreeView inside the scrolled window and setting its height
-  mScrolledWindow.set_child(mTreeView);
-  mScrolledWindow.set_min_content_height(400);
+  }
   
+ 
   // In the vertical box the scrolled window that contains the TreeView will be above.
   // The box that contains the buttons will be below
-  // FIXME 
-  // FIXME  make textview not editable
-  mVBox.append(mTextView);
-  Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer1, m_refTextBuffer2;
-
-  m_refTextBuffer1 = Gtk::TextBuffer::create();
-  m_refTextBuffer1->set_text("This is  ggtttthe text from TextBuffer #1.");
-  mTextView.set_buffer(m_refTextBuffer1);
-  mVBox.append(mScrolledWindow);
+ 
   mVBox.append(mButtonBox);
 
-  // When the cancel button is clicked, the function on_button_cancel_clicked is called
-  mButtonCancel.signal_clicked().connect( sigc::mem_fun(*this,
-              &MainWindow::on_button_cancel_clicked) );
-  
-  mButtonBox.append(mButtonCancel);
-  mButtonBox.set_margin(20);
-  
-  // This set_hexpand is needed for the buttons to align on the right
-  mButtonCancel.set_hexpand(true);
-  mButtonCancel.set_margin_end(5); // Space between the buttons
-  mButtonCancel.set_halign(Gtk::Align::END);
-  
-  mButtonBox.append(mButtonRun);
-   
-  mButtonRun.set_halign(Gtk::Align::END);
+  if (mJsonConfigurationOk) {
+
+    // When the cancel button is clicked, the function on_button_cancel_clicked is called
+    mButtonCancel.signal_clicked().connect( sigc::mem_fun(*this,
+                &MainWindow::on_button_cancel_clicked) );
+    
+    mButtonBox.append(mButtonCancel);
+    mButtonBox.set_margin(20);
+    // This set_hexpand is needed for the buttons to align on the right
+    mButtonCancel.set_hexpand(true);
+    mButtonCancel.set_margin_end(5); // Space between the buttons
+    mButtonCancel.set_halign(Gtk::Align::END);
+
+    // Now creating the list with the single column
+    // Getting a ptr to a TreeModel
+    mpTreeModel = Gtk::ListStore::create(mColumns);
+
+    // Now setting the model above to be used in the TreeView
+    mTreeView.set_model(mpTreeModel);
+
+    // Now creating the rows in the list
+
+    const vector<string> nProjectNames = mConfigurationParser.get_project_names();
+
+    for (string iProjectName : nProjectNames) {
+      
+      auto Row = *(mpTreeModel->append());
+      Row[mColumns.mColProjectName] = iProjectName;
+    
+    }
+    
+    // Actually putting the column in the view
+    mTreeView.append_column("Project Name", mColumns.mColProjectName);
+
+    // Connecting double click on list to callback on_treeview_row_activated
+    mTreeView.signal_row_activated().connect( sigc::mem_fun(*this,
+                &MainWindow::on_treeview_row_activated) );
+
+  } 
 
   // When the run button is clicked, the function on_button_run_clicked is called
   mButtonRun.signal_clicked().connect( sigc::mem_fun(*this,
               &MainWindow::on_button_run_clicked) );
   
-  // Now creating the list with the single column
-  // Getting a ptr to a TreeModel
-  mpTreeModel = Gtk::ListStore::create(mColumns);
+  mButtonRun.set_halign(Gtk::Align::END);
 
-  // Now setting the model above to be used in the TreeView
-  mTreeView.set_model(mpTreeModel);
-
-  // Now creating the rows in the list
-
-
-  const vector<string> nProjectNames = mConfigurationParser.get_project_names();
-
-  for (string iProjectName : nProjectNames) {
-    
-    auto Row = *(mpTreeModel->append());
-    Row[mColumns.mColProjectName] = iProjectName;
-  
+  if (!mJsonConfigurationOk) {
+    mButtonRun.set_hexpand(true);
+    mButtonRun.set_label("OK");
   }
-  
-  // Actually putting the column in the view
-  mTreeView.append_column("Project Name", mColumns.mColProjectName);
 
-  // Connecting double click on list to callback on_treeview_row_activated
-  mTreeView.signal_row_activated().connect( sigc::mem_fun(*this,
-              &MainWindow::on_treeview_row_activated) );
-    
+  mButtonBox.append(mButtonRun);
+
 }
 
 MainWindow::~MainWindow()
@@ -134,7 +144,10 @@ void MainWindow::on_treeview_row_activated(const Gtk::TreeModel::Path& path, Gtk
 void MainWindow::on_button_run_clicked()
 {
 
-  get_selected_project_and_run_its_tasks();
+  if (mJsonConfigurationOk) 
+    get_selected_project_and_run_its_tasks();
+  else
+    close();
 
 }
 

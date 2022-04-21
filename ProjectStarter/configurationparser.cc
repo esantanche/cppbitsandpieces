@@ -35,12 +35,8 @@ using namespace std;
  */
 ConfigurationParser::ConfigurationParser() 
 {
-
-  // mJsonConfigurationIsCorrect = true;
  
   load_names_of_projects();
-
-  // FIXME  if the function above returns false, the main window should catch the situation and manage it
   
   initialize_lookup_table_for_executables();
     
@@ -62,10 +58,7 @@ bool cmp(pair<string, int>& a,
 void ConfigurationParser::load_names_of_projects()
 {
 
-  // FIXME  this method should return a bool as false if the json file is wrong
-
   mJsonConfigurationIsCorrect = true;
-
 
   FILE* pJsonFile = fopen("projectstarterconfiguration.json", "rb"); // non-Windows use "r"
   
@@ -87,7 +80,7 @@ void ConfigurationParser::load_names_of_projects()
 
     assert(mnJsonConfiguration.IsArray());
 
-    // FIXME  there may be names to fix
+    // FIXME  there may be names to fix everywhere to follow naming conventions
 
     // The index i could be declared as size_t being an unsigned integer iterating on the
     // items of an array. We need to use rapidjson::SizeType instead because rapidjson uses
@@ -109,10 +102,6 @@ void ConfigurationParser::load_names_of_projects()
   }
 
   // FIXME  a lot of cleaning up
-
-  // FIXME  probably 
-
-  //return JsonConfigurationIsCorrect;
 
 }
 

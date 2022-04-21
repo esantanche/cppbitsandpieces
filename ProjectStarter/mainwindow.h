@@ -9,6 +9,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/textview.h>
+#include <gtkmm/label.h>
 
 // #include <gdk/gdk.h>
 
@@ -30,6 +31,10 @@ protected:
   Gtk::Button mButtonRun;  // Button 'RUN' that starts the project
   Gtk::Button mButtonCancel;  // Button cancel to exit without running anything
   Gtk::TextView mTextView;
+  Gtk::Label mLabelMessageJsonFileError; 
+  
+  bool mJsonConfigurationOk;
+
 
   // Tree model columns. These are the columns (1) that you find in the list
   // It's the column with the project names
@@ -46,6 +51,7 @@ protected:
     
   };
 
+
   Gtk::ScrolledWindow mScrolledWindow;
   Gtk::TreeView mTreeView;
   Glib::RefPtr<Gtk::ListStore> mpTreeModel;
@@ -53,6 +59,7 @@ protected:
   ModelColumns mColumns;
 
   ConfigurationParser mConfigurationParser;
+
 
   void get_selected_project_and_run_its_tasks();
   void on_button_run_clicked();
